@@ -75,6 +75,7 @@ if not defined brdMajor (
     pause
 )
 
+if "[%1]" equ "[justUpdated]" goto openBrd
 echo %YLW%[i] Checking for BRD update and opening in 3 seconds...%RST%
 echo     Press [S] to change updater settings.
 
@@ -83,7 +84,6 @@ cls
 if %errorlevel% equ 1 goto settings
 
 :main
-if "[%1]" equ "[justUpdated]" goto openBrd
 echo %YLW%[i] Checking for BRD update...%RST%
 echo.
 for /f "delims=" %%L in ('curl -Lso NUL -w "%%{url_effective}" "%repoLink%/releases/latest"') do set "latestReleaseLink=%%L"
@@ -98,8 +98,8 @@ if "%latestReleaseLink:~0,8%" equ "https://" (
 ) else (
     echo %YLW%[^^!] Couldn't check for updates%RST%
 )
-:openBrd
 echo.
+:openBrd
 echo %YLW%[i] Opening BRD...%RST%
 start /i "" "%executable%"
 timeout 3 >nul
