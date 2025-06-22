@@ -213,9 +213,9 @@ if %errorlevel% equ 2 call :setFileName & call :updateConfig "%repoLink%" "%file
 if %errorlevel% equ 3 call :setExecutableName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %brdMajor% %brdMinor% %brdPatch% & exit 0
 if %errorlevel% equ 4 (
     if defined autoUpdate (
-        call :setExecutableName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "" %brdMajor% %brdMinor% %brdPatch% & exit 0
+        call :updateConfig "%repoLink%" "%fileName%" "%executable%" "" %brdMajor% %brdMinor% %brdPatch% & exit 0
     ) else (
-        call :setExecutableName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "true" %brdMajor% %brdMinor% %brdPatch% & exit 0
+        call :updateConfig "%repoLink%" "%fileName%" "%executable%" "true" %brdMajor% %brdMinor% %brdPatch% & exit 0
     )
 )
 if %errorlevel% equ 5 (
