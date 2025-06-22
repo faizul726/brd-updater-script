@@ -83,6 +83,7 @@ cls
 if %errorlevel% equ 1 goto settings
 
 :main
+if "[%1]" equ "[justUpdated]" goto openBrd
 echo %YLW%[i] Checking for BRD update...%RST%
 echo.
 for /f "delims=" %%L in ('curl -Lso NUL -w "%%{url_effective}" "%repoLink%/releases/latest"') do set "latestReleaseLink=%%L"
@@ -105,7 +106,6 @@ timeout 3 >nul
 exit 0
 
 :newUpdateAvailable
-if "[%1]" equ "[justUpdated]" goto openBrd
 echo %WHT%New BRD update is available^^! ^(v%brdMajor%.%brdMinor%.%brdPatch% -^> v%latestReleaseLink:~-5,1%.%latestReleaseLink:~-3,1%.%latestReleaseLink:~-1,1%^)%RST%
 echo.
 echo %YLW%[?] Do you want to update?%RST%
