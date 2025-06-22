@@ -33,7 +33,7 @@ if not defined brdMajor (
     call :setVariable Minor
     call :setVariable Patch
 
-    echo %WHT%Is the GitHub repo link %CYN%%repoLink%%WHT% correct?%RST%
+    echo %WHT%[?] Is the GitHub repo link %CYN%%repoLink%%WHT% correct?%RST%
     echo.
     echo %GRN%[Y] Yes, it is    %RED%[N] No, set my own%RST%
     echo.
@@ -70,7 +70,7 @@ if not defined brdMajor (
     echo.
     choice /c yn /n >nul
     if !errorlevel! neq 1 goto setConfig
-    call :updateConfig "!repoLink!" "!fileName!" "%executable%" !brdMajor! !brdMinor! !brdPatch!
+    call :updateConfig "!repoLink!" "!fileName!" "!executable!" "!autoUpdate!" !brdMajor! !brdMinor! !brdPatch!
     exit 0
     pause
 )
@@ -105,11 +105,13 @@ timeout 3 >nul
 exit 0
 
 :newUpdateAvailable
+if "[%1]" equ "[justUpdated]" goto openBrd
 echo %WHT%New BRD update is available^^! ^(v%brdMajor%.%brdMinor%.%brdPatch% -^> v%latestReleaseLink:~-5,1%.%latestReleaseLink:~-3,1%.%latestReleaseLink:~-1,1%^)%RST%
 echo.
 echo %YLW%[?] Do you want to update?%RST%
 echo.
 echo %GRN%[Y] Yes    %RED%[N] No%RST%
+echo.
 choice /c yn /n >nul
 if %errorlevel% equ 1 goto brdUpdater
 goto openBrd
@@ -180,9 +182,10 @@ if exist "%executable%" (
     echo     So, can't ensure whether BRD update is complete.
     echo     Cleaning up...
 )
+echo.
 
 del /q ".\BRD_download.zip"
-call :updateConfig "%repoLink%" "%fileName%" "%executable%" %latestReleaseLink:~-5,1% %latestReleaseLink:~-3,1% %latestReleaseLink:~-1,1%
+call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %latestReleaseLink:~-5,1% %latestReleaseLink:~-3,1% %latestReleaseLink:~-1,1%
 exit 0
 
 :settings
@@ -193,18 +196,36 @@ echo.
 echo [1] Change BRD GitHub repo link %GRY%^(currently set to: %repoLink%^)%RST%
 echo [2] Change BRD target file name %GRY%^(currently set to: %fileName%^)%RST%
 echo [3] Change BRD executable file name %GRY%^(currently set to: %executable%^)%RST%
-echo [4] Reset settings
+if defined autoUpdate (
+    echo [4] Update without confirmation %GRN%[ON]
+) else (
+    echo [4] Update without confirmation %GRY%[OFF]
+)
+echo %WHT%[5] Reset settings
 echo.
 echo %YLW%Press corresponding key to confirm your choice...%RST%
 echo %GRY%Note: Updater will restart after each change%RST%
 echo.
-choice /c 1234b /n >nul
+choice /c 12345b /n >nul
 
-if %errorlevel% equ 1 call :setRepoLink & call :updateConfig "%repoLink%" "%fileName%" "%executable%" %brdMajor% %brdMinor% %brdPatch% & exit 0
-if %errorlevel% equ 2 call :setFileName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" %brdMajor% %brdMinor% %brdPatch% & exit 0
-if %errorlevel% equ 3 call :setExecutableName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" %brdMajor% %brdMinor% %brdPatch% & exit 0
-if %errorlevel% equ 4 call :updateConfig "https://github.com/QYCottage/BetterRenderDragon" "BetterRenderDragon.zip" "mcbe_injector.exe" "" "" "" & exit 0
-if %errorlevel% equ 5 start /i /b "" cmd /c "%~f0" & exit 0
+if %errorlevel% equ 1 call :setRepoLink & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %brdMajor% %brdMinor% %brdPatch% & exit 0
+if %errorlevel% equ 2 call :setFileName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %brdMajor% %brdMinor% %brdPatch% & exit 0
+if %errorlevel% equ 3 call :setExecutableName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %brdMajor% %brdMinor% %brdPatch% & exit 0
+if %errorlevel% equ 4 (
+    if defined autoUpdate (
+        call :setExecutableName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "" %brdMajor% %brdMinor% %brdPatch% & exit 0
+    ) else (
+        call :setExecutableName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "true" %brdMajor% %brdMinor% %brdPatch% & exit 0
+    )
+)
+if %errorlevel% equ 5 (
+    echo %RED%[?] Are you sure about resetting updater settings?%RST%
+    echo.
+    echo %RED%[Y] Yes    %GRN%[N] No%RST%
+    echo.
+    call :updateConfig "https://github.com/QYCottage/BetterRenderDragon" "BetterRenderDragon.zip" "mcbe_injector.exe" "" "" "" "" & exit 0
+)
+if %errorlevel% equ 6 start /i /b "" cmd /c "%~f0" & exit 0
 
 :updateConfig
 echo %YLW%[i] Updating updater settings...%RST%
@@ -225,14 +246,15 @@ copy /d "%~nx0" "%temp%" >nul
     echo             echo set "repoLink=%~1"
     echo             echo set "fileName=%~2"
     echo             echo set "executable=%~3"
-    echo             echo set "brdMajor=%~4"
-    echo             echo set "brdMinor=%~5"
-    echo             echo set "brdPatch=%~6"
+    echo             echo set "autoUpdate=%~4"
+    echo             echo set "brdMajor=%~5"
+    echo             echo set "brdMinor=%~6"
+    echo             echo set "brdPatch=%~7"
     echo             echo :: CONFIG END
     echo         ^)^>^>"%~f0"
     echo         echo %GRN%[i] Updater settings updated successfully.%RST%
     echo         timeout 3 ^>nul
-    echo         start /i /b "" cmd /c "%~f0"
+    echo         start /i /b "" cmd /c "%~f0" "justUpdated"
     echo         exit 0
     echo     ^)
     echo ^)
@@ -245,6 +267,7 @@ exit 0
 set "repoLink=https://github.com/QYCottage/BetterRenderDragon"
 set "fileName=BetterRenderDragon.zip"
 set "executable=mcbe_injector.exe"
+set "autoUpdate="
 set "brdMajor="
 set "brdMinor="
 set "brdPatch="
