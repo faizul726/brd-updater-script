@@ -185,7 +185,7 @@ if exist "%executable%" (
 echo.
 
 del /q ".\BRD_download.zip"
-call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %latestReleaseLink:~-5,1% %latestReleaseLink:~-3,1% %latestReleaseLink:~-1,1%
+call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %latestReleaseLink:~-5,1% %latestReleaseLink:~-3,1% %latestReleaseLink:~-1,1% "justUpdated"
 exit 0
 
 :settings
@@ -254,7 +254,7 @@ copy /d "%~nx0" "%temp%" >nul
     echo         ^)^>^>"%~f0"
     echo         echo %GRN%[i] Updater settings updated successfully.%RST%
     echo         timeout 3 ^>nul
-    echo         start /i /b "" cmd /c "%~f0" justUpdated
+    echo         start /i /b "" cmd /c "%~f0" %~8
     echo         exit 0
     echo     ^)
     echo ^)
