@@ -195,12 +195,12 @@ exit 0
 
 :settings
 cls
-echo %RED%^< [B] Restart updater%WHT%
+echo %RED%^< [B] Restart BRD updater%WHT%
 echo.
 
-echo [1] Change BRD GitHub repo link %GRY%^(currently set to: %repoLink%^)%RST%
-echo [2] Change BRD target file name %GRY%^(currently set to: %fileName%^)%RST%
-echo [3] Change BRD executable file name %GRY%^(currently set to: %executable%^)%RST%
+echo [1] Change BRD GitHub repo link %GRY%^(currently set to: %repoLink%^)%WHT%
+echo [2] Change BRD target file name %GRY%^(currently set to: %fileName%^)%WHT%
+echo [3] Change BRD executable file name %GRY%^(currently set to: %executable%^)%WHT%
 if defined autoUpdate (
     echo [4] Update without confirmation %GRN%[ON]
 ) else (
