@@ -106,6 +106,11 @@ timeout 3 >nul
 exit 0
 
 :newUpdateAvailable
+if defined autoUpdate (
+    echo [i] Updating BRD ^(v%brdMajor%.%brdMinor%.%brdPatch% -^> v%latestReleaseLink:~-5,1%.%latestReleaseLink:~-3,1%.%latestReleaseLink:~-1,1%^)
+    echo.
+    goto brdUpdater
+)
 echo %WHT%New BRD update is available^^! ^(v%brdMajor%.%brdMinor%.%brdPatch% -^> v%latestReleaseLink:~-5,1%.%latestReleaseLink:~-3,1%.%latestReleaseLink:~-1,1%^)%RST%
 echo.
 echo %YLW%[?] Do you want to update?%RST%
@@ -171,7 +176,7 @@ for /d %%D in (*) do if "[%%~nD]" neq "[old_version]" (>nul move /y ".\%%D" old_
 for %%F in (*) do if "[%%~nxF]" neq "[%~nx0]" (>nul move /y ".\%%F" old_version)
 ::echo powershell -NoProfile -Command "Invoke-WebRequest '%latestReleaseLink:/tag/=/download/%/%fileName%' -OutFile BRD_download.zip ; Expand-Archive -Force BRD_download.zip ."
 ::pause
-echo %YLW%[i] Downloading BRD from GitHub...%RST%
+echo %YLW%[i] Downloading BRD from GitHub... %GRY%^(%latestReleaseLink%^)%RST%
 powershell -NoProfile -Command "Invoke-WebRequest '%latestReleaseLink:/tag/=/download/%/%fileName%' -OutFile BRD_download.zip ; Expand-Archive -Force BRD_download.zip ."
 echo.
 if exist "%executable%" (
