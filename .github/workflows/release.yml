@@ -20,11 +20,11 @@ jobs:
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
-        run:
+        run: |
           ls
           gh release create \
           ${{ github.event.inputs.tag }} \
-          brd_update_and_run.bat \
+          "brd_update_and_run.bat" \
           --title "${{ github.event.inputs.tag }}" \
           --notes "Released on $(TZ='Asia/Dhaka' date +'%Y%m%d_%H%M') (UTC +06)" \
           
