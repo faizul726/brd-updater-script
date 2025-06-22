@@ -22,6 +22,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           ls
+          
           gh release create \
           ${{ github.event.inputs.tag }} \
           "brd_update_and_run.bat" \
