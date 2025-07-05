@@ -8,8 +8,8 @@ setlocal enabledelayedexpansion
 pushd "%~dp0"
 
 set MAJOR=1
-set MINOR=0
-set deiteu=20250622
+set MINOR=1
+set deiteu=20250705
 
 title Fzul's BRD Updater v%MAJOR%.%MINOR% - %deiteu%
 
@@ -27,7 +27,57 @@ set "updaterVersion=v%MAJOR%.%MINOR%"
 cls
 call :loadConfig
 if not defined brdMajor (
+    echo %YLW%[i] Creating a test file to see if current folder is writeable...%RST%
+    echo.
+
+    echo Test file for Fzul's BRD Updater>test-file.txt
+    if exist "test-file.txt" (
+        del /q ".\test-file.txt"
+        echo %GRN%[i] Folder is writeable^^!%RST%
+        timeout 2 >nul
+    ) else (
+        echo %RED%[^^!] Folder is NOT writeable.
+        echo     Make sure current folder is not in ransomware protection list.
+        echo     %GRY%As it often restricts programs to write in the folder.
+        echo.
+
+        echo Press any key to exit...%RST%
+        pause >nul
+        exit /b 1
+    )
+    cls
+    echo %WHT%Fzul's BRD Updater %updaterVersion%
+    echo.
     echo %YLW%[*] Initial setup%RST%
+    echo.
+    echo.
+    echo %WHT%[i] BetterRenderDragon is often considered as malware by Microsoft Defender
+    echo     Which is a false positive. Means, BRD does nothing harmful but still considered as virus.
+    echo     This often leads to BRD files being deleted, thus making BRD not work.%RST%
+    echo.
+
+    echo %YLW%[?] Do you want to put this folder in Microsoft Defender exclusions?%RST%
+    echo.
+    echo %GRN%[Y] Yes ^(will request admin permission^)
+    echo %RED%[N] No, skip%RST%
+    echo.
+    echo %GRY%Note: You can skip if you use other antivirus, 
+    echo but make sure to put this folder in exclusion/whitelist of that antivirus.%RST%
+    echo.
+    choice /c yn /n >nul
+    if !errorlevel! equ 1 (
+        call :whitelistFolder
+    ) else (
+        echo %RED%[^^!] Are you sure about not adding this folder to antivirus exclusions?%RST%
+        echo.
+
+        echo %RED%[Y] Yes, 101%% sure    %GRN%[N] No, add it to exclusion ^(will request admin permission^)%RST%
+        echo.
+
+        choice /c yn /n >nul
+        if !errorlevel! equ 2 (call :whitelistFolder) else (echo %YLW%[^^!] Both updater and BRD may not work as expected.%RST% & timeout 3 >nul)
+    )
+
     echo.
     call :setVariable Major
     call :setVariable Minor
@@ -64,7 +114,7 @@ if not defined brdMajor (
     echo.
     echo %WHT%BRD GitHub repo link: %CYN%!repoLink!%RST%
     echo %WHT%BRD file to download: %RST%!fileName!
-    echo %WHT%BRD executable file: %RST%!executable!
+    echo %WHT%BRD executable file:  %RST%!executable!
     echo.
     echo %RED%[Y] Yes, everything is correct    %GRN%[N] No, let me set again%RST%
     echo.
@@ -129,6 +179,23 @@ if not defined brd%1 (
     echo %RED%[^^!] Please try again.%RST%
     goto setVariable
 )
+goto :EOF
+
+:whitelistFolder
+:: Made possible thanks to
+:: https://stackoverflow.com/a/54099977/30810698
+
+echo %YLW%[i] Adding script folder to Microsoft Defender exclusions...%RST%
+echo.
+powershell Start-Process -Verb RunAs -Wait powershell -ArgumentList \"Write-Host [i] Adding script folder to exclusions... ; Write-Host ; Add-MpPreference -ExclusionPath `\"`\"`\"%cd%`\"`\"`\" ; Write-Host [*] Done ; sleep 3\" || (
+    echo %RED%[^^!] Failed to add folder to Microsoft Defender exclusions.%RST%
+    echo.
+    echo %YLW%[?] Try again?%RST%
+    echo.
+    choice /c yn /n >nul
+    if !errorlevel! equ 1 goto whitelistFolder
+)
+echo %GRN%[i] Added successfully%RST%
 goto :EOF
 
 :setRepoLink
@@ -206,12 +273,14 @@ if defined autoUpdate (
 ) else (
     echo [4] Update without confirmation %GRY%[OFF]
 )
-echo %WHT%[5] Reset settings
+echo %WHT%[5] Add current folder to Microsoft Defender exclusions
+echo.
+echo [6] Reset updater settings
 echo.
 echo %YLW%Press corresponding key to confirm your choice...%RST%
 echo %GRY%Note: Updater will restart after each change%RST%
 echo.
-choice /c 12345b /n >nul
+choice /c 123456b /n >nul
 
 if %errorlevel% equ 1 call :setRepoLink & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %brdMajor% %brdMinor% %brdPatch% & exit 0
 if %errorlevel% equ 2 call :setFileName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %brdMajor% %brdMinor% %brdPatch% & exit 0
@@ -223,17 +292,18 @@ if %errorlevel% equ 4 (
         call :updateConfig "%repoLink%" "%fileName%" "%executable%" "true" %brdMajor% %brdMinor% %brdPatch% & exit 0
     )
 )
-if %errorlevel% equ 5 (
+if %errorlevel% equ 5 call :whitelistFolder & start /i /b "" cmd /c "%~f0" & exit 0
+if %errorlevel% equ 6 (
     echo %RED%[?] Are you sure about resetting updater settings?%RST%
     echo.
     echo %RED%[Y] Yes    %GRN%[N] No%RST%
     echo.
     call :updateConfig "https://github.com/QYCottage/BetterRenderDragon" "BetterRenderDragon.zip" "mcbe_injector.exe" "" "" "" "" & exit 0
 )
-if %errorlevel% equ 6 start /i /b "" cmd /c "%~f0" & exit 0
+if %errorlevel% equ 7 start /i /b "" cmd /c "%~f0" & exit 0
 
 :updateConfig
-echo %YLW%[i] Updating updater settings...%RST%
+echo %YLW%[i] Updating BRD updater settings...%RST%
 echo.
 copy /d "%~nx0" "%temp%" >nul
 (
