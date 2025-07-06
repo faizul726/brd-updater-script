@@ -1,5 +1,8 @@
 *
-!brd_update_and_run.bat
+!README.md
+!src
+!src/*
+!src/*/**
 !.gitignore
 !.github/
 !.github/**/*
