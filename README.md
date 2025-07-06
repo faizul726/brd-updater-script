@@ -28,7 +28,7 @@ After completing initial setup, you can set it to update automatically without a
 You can change updater settings from the script itself or edit the script (settings are in the last of the script)
 
 ## 💁‍♂️ How to use?
-> ![NOTE]
+> [!NOTE]
 > * The script can work with existing BRD installation or it can get fresh BRD files for you.
 > * Actions are labeled with the key to press. You navigate within the script by pressing keys on keyboard.
 
@@ -66,7 +66,7 @@ Storing details should not take more than 5 seconds.
 8. After this initial setup, you don't have to do it again. It will check for updates everytime it's opened and will ask you to update if there is any. Then it will open BRD.  
 **That means you can create a shortcut to the script and use it as your way to both update and open BRD.**  
 
-> ![TIP]  
+> [!TIP]  
 > * You can disable update confirmation from updater settings, so it updates and opens BRD without any user confirmation.  
 > * You can open updater settings once the initial setup is complete, during the 3 second wait window by pressing S.
 > * You can also change other details that you gave in the initial setup.
