@@ -8,8 +8,12 @@ setlocal enabledelayedexpansion
 pushd "%~dp0"
 
 set MAJOR=1
-set MINOR=1
-set deiteu=20250705
+set MINOR=2
+set deiteu=20250719
+
+rem TODO
+rem Add self updater script from Matject
+rem 20250719
 
 title Fzul's BRD Updater v%MAJOR%.%MINOR% - %deiteu%
 
@@ -150,6 +154,29 @@ if "%latestReleaseLink:~0,8%" equ "https://" (
 )
 echo.
 :openBrd
+if not exist "%executable%" (
+    echo %RED%[^^!] Executable file "%executable%" not found.%RST%
+    echo.
+    echo %YLW%[?] What do you want to do?%RST%
+    echo.
+    echo [1] It exists, 
+    echo     just the file name got changed in this update.
+    echo     Let me set the executable file name again
+    echo.
+    echo [2] Download BRD again
+    echo.
+    echo [B] Exit
+    echo.
+    choice /c 12b /n >nul
+    if !errorlevel! equ 3 exit
+    if !errorlevel! equ 2 (
+        set brdMajor=0
+        set brdMinor=0
+        set brdPatch=0
+        goto main
+    )
+    if !errorlevel! equ 1 call :setExecutableName & call :updateConfig "%repoLink%" "%fileName%" "%executable%" "%autoUpdate%" %brdMajor% %brdMinor% %brdPatch% & exit 0
+)
 echo %YLW%[i] Opening BRD...%RST%
 start /i "" "%executable%"
 timeout 3 >nul
