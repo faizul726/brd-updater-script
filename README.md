@@ -34,7 +34,7 @@ You can change updater settings from the script itself or edit the script (setti
 
 <br>
 
-[**📥 Download Fzul's BRD Updater script**](https://github.com/faizul726/brd-updater-script/download/releases/latest/brd_update_and_run.bat) 
+[**📥 Download Fzul's BRD Updater script**](https://github.com/faizul726/brd-updater-script/releases/latest/download/brd_update_and_run.bat) 
 
 1. Download and put the script in a folder where you want to have BRD or already have.
 
