@@ -1,5 +1,8 @@
 # Fzul's BRD Updater Script
 
+> [!NOTE]
+> As of Dec 23, 2025, this script no longer works as intended with BetterRenderDragon from QYCottage. So I have decided to archive this repo for now. I will probably unarchive this when I can make a GUI for this.
+
 A companion batch script to be used with BetterRenderDragon. 
 
 [![⭳ Download Fzul's BRD Updater](https://img.shields.io/github/downloads/faizul726/brd-updater-script/total?label=⭳%20Lifetime%20Downloads)](https://github.com/faizul726/brd-updater-script/download/releases/latest/brd_update_and_run.bat)
