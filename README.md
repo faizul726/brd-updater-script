@@ -10,13 +10,18 @@ A companion batch script to be used for [BetterRenderDragon](https://github.com/
 
 ![Fzul's BRD Manager Script screenshot](src/hero.png)
 
+## How to use?
+1. Download script from [here](https://github.com/faizul726/brd-manager-script/download/releases/latest/brd-manager-script.bat) and double click it
+2. Read what's on screen. (hint: Navigate using keyboard buttons)
+
+<!--
 ## ✨ Features
 * **Automatically updates BRD and opens it**  
 It checks for updates and asks you to update if there is any, then it opens BRD.
 
 * More features may be added later
 
-<!--
+
 ## 💁‍♂️ How to use?
 > [!NOTE]
 > * The script can work with existing BRD installation or it can get fresh BRD files for you.
