@@ -24,7 +24,7 @@ It checks for updates and asks you to update if there is any, then it opens BRD.
 
 <br>
 
-[**📥 Download Fzul's BRD Updater script**](https://github.com/faizul726/brd-updater-script/download/releases/latest/brd_update_and_run.bat) 
+[**📥 Download Fzul's BRD Updater script**](https://github.com/faizul726/brd-updater-script/releases/latest/download/brd_update_and_run.bat) 
 
 1. Download and put the script in a folder where you want to have BRD or already have.
 
@@ -60,4 +60,7 @@ Storing details should not take more than 5 seconds.
 > * You can disable update confirmation from updater settings, so it updates and opens BRD without any user confirmation.  
 > * You can open updater settings once the initial setup is complete, during the 3 second wait window by pressing S.
 > * You can also change other details that you gave in the initial setup.
+<<<<<<< HEAD
 -->
+=======
+>>>>>>> 40d491730dbb66ae2175806c3c3b88a9170cd7dd
