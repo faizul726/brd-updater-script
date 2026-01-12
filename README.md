@@ -60,7 +60,4 @@ Storing details should not take more than 5 seconds.
 > * You can disable update confirmation from updater settings, so it updates and opens BRD without any user confirmation.  
 > * You can open updater settings once the initial setup is complete, during the 3 second wait window by pressing S.
 > * You can also change other details that you gave in the initial setup.
-<<<<<<< HEAD
 -->
-=======
->>>>>>> 40d491730dbb66ae2175806c3c3b88a9170cd7dd
