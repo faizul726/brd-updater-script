@@ -6,3 +6,4 @@
 !.gitignore
 !.github/
 !.github/**/*
+src/script_config.txt

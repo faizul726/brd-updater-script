@@ -1,32 +1,22 @@
-# Fzul's BRD Updater Script
+# Fzul's BRD Manager Script
 
-A companion batch script to be used with BetterRenderDragon. 
+> [!NOTE]
+> Previously this project was known as BRD Updater Script
 
-[![⭳ Download Fzul's BRD Updater](https://img.shields.io/github/downloads/faizul726/brd-updater-script/total?label=⭳%20Lifetime%20Downloads)](https://github.com/faizul726/brd-updater-script/download/releases/latest/brd_update_and_run.bat)
-[![⭳ Download Fzul's BRD Updater](https://img.shields.io/github/v/tag/faizul726/brd-updater-script?label=Latest%20Version)](https://github.com/faizul726/brd-updater-script/download/releases/latest/brd_update_and_run.bat)
+A companion batch script to be used for [BetterRenderDragon](https://github.com/QYCottage/BetterRenderDragon). 
 
-![Fzul's BRD Updater](src/hero.png)
+[![⭳ Download Fzul's BRD Manager](https://img.shields.io/github/downloads/faizul726/brd-manager-script/total?label=⭳%20Lifetime%20Downloads)](https://github.com/faizul726/brd-updater-script/download/releases/latest/brd-manager-script.bat)
+[![⭳ Download Fzul's BRD Manager](https://img.shields.io/github/v/tag/faizul726/brd-manager-script?label=Latest%20Version)](https://github.com/faizul726/brd-updater-script/download/releases/latest/brd-manager-script.bat)
+
+![Fzul's BRD Manager Script screenshot](src/hero.png)
 
 ## ✨ Features
-* **Fully portable**  
-Configurations are stored in the script itself. (a bit experimental)
-
-* **Futureproof (hopefully)**  
-It has options to change source GitHub link, file to download, and executable to open. Means you can adjust for future changes by yourself.  
-Note: Default values are set to work with [QYCottage's BetterRenderDragon v1.6.0+](https://github.com/QYCottage/BetterRenderDragon/)
-
 * **Automatically updates BRD and opens it**  
 It checks for updates and asks you to update if there is any, then it opens BRD.
 
-* **Adds folder to Windows Defender exclusions (optional)**  
-So, BRD files will not be deleted without notice.
+* More features may be added later
 
-* **Zero user interaction required (optional)**  
-After completing initial setup, you can set it to update automatically without any confirmation from its settings.  
-
-* **Settings**   
-You can change updater settings from the script itself or edit the script (settings are in the last of the script)
-
+<!--
 ## 💁‍♂️ How to use?
 > [!NOTE]
 > * The script can work with existing BRD installation or it can get fresh BRD files for you.
@@ -70,3 +60,4 @@ Storing details should not take more than 5 seconds.
 > * You can disable update confirmation from updater settings, so it updates and opens BRD without any user confirmation.  
 > * You can open updater settings once the initial setup is complete, during the 3 second wait window by pressing S.
 > * You can also change other details that you gave in the initial setup.
+-->

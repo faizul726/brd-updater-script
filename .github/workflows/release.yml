@@ -6,7 +6,7 @@ on:
       tag:
         description: 'Release tag'
         required: true
-        default: 'v1.'
+        default: 'v2.'
         type: string
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
         run: |
           gh release create \
           ${{ github.event.inputs.tag }} \
-          "brd_update_and_run.bat" \
+          "brd-manager-script.bat" \
           --title "${{ github.event.inputs.tag }}" \
           --notes "Released on $(TZ='Asia/Dhaka' date +'%Y%m%d_%H%M') (UTC +06)" \
           
