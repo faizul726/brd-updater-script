@@ -57,11 +57,16 @@ echo test file >"!MCLOCATION!\testing.txt" && (
     call 
 ) || (
     echo !ERR![^^!] Can't write to "!MCLOCATION!"!RST!
+    echo.
+    
     goto :stoppu
 )
 
 where curl >nul 2>&1 || (
-    echo !ERR![^^!] curl is missing. The script won't work for you.
+    echo !ERR![^^!] curl is missing.!RST!
+    echo.
+
+    goto :stoppu
 )
 
 :INIT
