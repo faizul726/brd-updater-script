@@ -5,7 +5,7 @@
 setlocal enabledelayedexpansion
 pushd "%~dp0"
 
-set "version=2.0"
+set "version=2.1"
 
 title Fzul's BRD Manager Script v%version%
 
@@ -75,6 +75,8 @@ echo !RED![3] Remove BRD
 echo.
 
 echo !WHT![S] Settings    !RED![B] Exit!RST!
+echo.
+echo !YLW!Press corresponding key to select your choice!RST!
 echo.
 echo !GRY!MC install location: !MCLOCATION!
 if defined CURRENT_VERSION_NAME (
@@ -160,6 +162,13 @@ if !errorlevel! equ 0 if exist "BetterRenderDragon.dll" (
 )
 
 popd
+
+:: Disables debug (console) window of ModLoader, as it likely doesn't matter to anyone using this script
+>"%MCLOCATION%\config.ini" (
+    echo [General]
+    echo Console=false
+    echo Preview=false
+)
 
 >script_config.txt echo %SCRIPT_CONFIG:~0,1%%BRD_VERSION%__%BRD_VERSION_NAME%
 set /a CURRENT_VERSION=%BRD_VERSION%
