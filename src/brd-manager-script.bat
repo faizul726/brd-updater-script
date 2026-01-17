@@ -6,6 +6,7 @@ setlocal enabledelayedexpansion
 pushd "%~dp0"
 
 set "version=2.1"
+set "source_link=github.com/faizul726/brd-manager-script"
 
 title Fzul's BRD Manager Script v%version%
 
@@ -66,7 +67,7 @@ where curl >nul 2>&1 || (
 :INIT
 cls
 pushd "%~dp0"
-echo %hideCursor%!WHT!Fzul's BRD Manager Script v%version% ^| !CYN!github.com/faizul726/brd-updater-script!RST!
+echo %hideCursor%!WHT!Fzul's BRD Manager Script v%version% ^| !CYN!%source_link%!RST!
 echo.
 
 echo !GRN![1] Setup BRD
