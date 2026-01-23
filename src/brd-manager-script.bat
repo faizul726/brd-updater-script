@@ -5,7 +5,7 @@
 setlocal enabledelayedexpansion
 pushd "%~dp0"
 
-set "version=2.1"
+set "version=2.2"
 set "source_link=github.com/faizul726/brd-manager-script"
 
 title Fzul's BRD Manager Script v%version%
@@ -58,12 +58,12 @@ echo test file >"!MCLOCATION!\testing.txt" && (
 ) || (
     echo !ERR![^^!] Can't write to "!MCLOCATION!"!RST!
     echo.
-    
+
     goto :stoppu
 )
 
 where curl >nul 2>&1 || (
-    echo !ERR![^^!] curl is missing.!RST!
+    echo !ERR![^^!] curl is missing. The script won't work for you.
     echo.
 
     goto :stoppu
@@ -301,6 +301,18 @@ if exist "%MCLOCATION%\WINHTTP.dll" (
 if exist "%APPDATA%\Minecraft Bedrock\mods\BetterRenderDragon.dll" (
     del /q "%APPDATA%\Minecraft Bedrock\mods\BetterRenderDragon.dll"
     echo !YLW![*] Deleted BetterRenderDragon.dll from "%APPDATA%\Minecraft Bedrock\mods"!RST!
+    echo.
+)
+
+if exist "%MCLOCATION%\config.ini" (
+    del /q "%MCLOCATION%\config.ini" >nul
+    echo !YLW![*] Deleted config.ini from "%MCLOCATION%"!RST!
+    echo.
+)
+
+if exist "%MCLOCATION%\mods\BetterRenderDragon\" (
+    rmdir /q /s "%MCLOCATION%\mods\BetterRenderDragon" >nul
+    echo !YLW![*] Deleted mods\BetterRenderDragon folder from "%MCLOCATION%"!RST!
     echo.
 )
 
